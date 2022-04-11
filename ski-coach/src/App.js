@@ -25,11 +25,11 @@ function App() {
   const { isAuthenticated, isLoading, user } = useAuth0();
   const [coaches, setCoaches] = useState([]);
 
-  const baseURL = "http://localhost:5000";
+  const baseURL = "";
 
   useEffect(() => {
     async function fetchCoaches() {
-      const data = await fetch("http://localhost:5000/coaches");
+      const data = await fetch(baseURL + "/coaches");
       const jsonData = await data.json();
       console.log(jsonData);
       setCoaches(jsonData);
@@ -41,7 +41,7 @@ function App() {
 
   const addCoach = async (coach) => {
     console.log('coach is here:', coach);
-    const tmp = await fetch("http://localhost:5000/coaches",
+    const tmp = await fetch(baseURL + "/coaches",
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -60,7 +60,7 @@ function App() {
   const deleteCoach = async (id) => {
     console.log("delete things， id:");
     console.log(id);
-    await fetch(`http://localhost:5000/coaches/${id}`,
+    await fetch(baseURL + `/coaches/${id}`,
       {
         method: 'DELETE',
         headers: { "Content-Type": "application/json" }

@@ -35,7 +35,7 @@ export default function EditCoach() {
 
     useEffect(() => {
         async function fetchCoach() {
-            const data = await fetch(`http://localhost:5000/coaches/${id}`);
+            const data = await fetch(`/coaches/${id}`);
             const jsonData = await data.json();
             console.log(jsonData);
             setCoach(jsonData);
@@ -53,7 +53,7 @@ export default function EditCoach() {
 
     const edit_Coach = async (id, name, email, user, coach) => {
         console.log('Trying to edit:', coach);
-        const tmp = await fetch(`http://localhost:5000/coaches/${id}/edit`,
+        const tmp = await fetch(`/coaches/${id}/edit`,
             {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },

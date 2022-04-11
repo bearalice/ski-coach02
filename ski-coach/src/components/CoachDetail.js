@@ -15,7 +15,7 @@ export default function CoachDetail({ findCoach, deleteCoach, editCoach }) {
 
     useEffect(() => {
         async function fetchCoach() {
-            const data = await fetch(`http://localhost:5000/coaches/${id}`);
+            const data = await fetch(`/coaches/${id}`);
             const jsonData = await data.json();
             console.log(jsonData);
             setCoach(jsonData);
@@ -25,7 +25,7 @@ export default function CoachDetail({ findCoach, deleteCoach, editCoach }) {
 
     useEffect(() => {
         async function fetchReviews() {
-            const reviewData = await fetch(`http://localhost:5000/coaches/${id}/reviews`);
+            const reviewData = await fetch(`/coaches/${id}/reviews`);
             const reviewJsonData = await reviewData.json();
             console.log("reviews for a specific coach:", reviewJsonData);
             setReviews(reviewJsonData);
@@ -37,7 +37,7 @@ export default function CoachDetail({ findCoach, deleteCoach, editCoach }) {
     console.log("NOW user:", user.nickname);
 
     const addReview = async (review) => {
-        const tmp = await fetch(`http://localhost:5000/coaches/${id}/reviews`,
+        const tmp = await fetch(`/coaches/${id}/reviews`,
             {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -53,7 +53,7 @@ export default function CoachDetail({ findCoach, deleteCoach, editCoach }) {
 
     const edit_Coach = async (coach) => {
         console.log('Trying to edit:', coach);
-        const tmp = await fetch(`http://localhost:5000/coaches/${id}`,
+        const tmp = await fetch(`/coaches/${id}`,
             {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },

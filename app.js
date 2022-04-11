@@ -13,7 +13,7 @@ app.use(cors());
 app.use(express.json());
 
 // app.use(bodyParser.urlencoded({ extended: false }));
-app.use(express.static(__dirname + "public/build"));
+app.use(express.static(__dirname + "/public/build"));
 app.use('/coaches', coaches); //this is a middleware  
 app.use('/coaches/:id/reviews', reviews); //this is a middleware
 
