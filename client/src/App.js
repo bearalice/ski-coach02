@@ -25,6 +25,7 @@ function App() {
   const { isAuthenticated, isLoading, user } = useAuth0();
   const [coaches, setCoaches] = useState([]);
 
+  //const baseURL = "http://localhost:5000";
   const baseURL = "";
 
   useEffect(() => {
@@ -60,7 +61,7 @@ function App() {
   const deleteCoach = async (id) => {
     console.log("delete things， id:");
     console.log(id);
-    await fetch(baseURL + `/coaches/${id}`,
+    await fetch(`http://localhost:5000/coaches/${id}`,
       {
         method: 'DELETE',
         headers: { "Content-Type": "application/json" }

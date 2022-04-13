@@ -12,6 +12,7 @@ export default function CoachDetail({ findCoach, deleteCoach, editCoach }) {
     const { id } = useParams();
     const [coach, setCoach] = useState({});
     const [reviews, setReviews] = useState([]);
+    const baseURL = "";
 
     useEffect(() => {
         async function fetchCoach() {
