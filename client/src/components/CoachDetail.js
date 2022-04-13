@@ -35,7 +35,6 @@ export default function CoachDetail({ findCoach, deleteCoach, editCoach }) {
     }, [])
 
     const { isAuthenticated, user } = useAuth0();
-    console.log("NOW user:", user.nickname);
 
     const addReview = async (review) => {
         const tmp = await fetch(`/coaches/${id}/reviews`,
