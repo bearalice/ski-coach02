@@ -15,6 +15,7 @@ export default function NavBar({ isAuthed }) {
                         <Nav>
                             <Nav.Link as={Link} to="/">Home</Nav.Link>
                             <Nav.Link as={Link} to="/coaches">Coaches</Nav.Link>
+                            <Nav.Link as={Link} to="/search">Search</Nav.Link>
                             {isAuthed ?
                                 <Nav.Link as={Link} to="/profile">My Profile</Nav.Link>
                                 : <Nav.Link as={Link} to="/profile">Profile</Nav.Link>}

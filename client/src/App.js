@@ -13,6 +13,8 @@ import Coach from './components/Coach';
 import CoachDetail from './components/CoachDetail';
 import EditCoach from './components/EditCoach';
 import NavBar from './components/NavBar';
+import Search from './components/Search';
+import Map from './components/GoogleMaps';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import Card from "react-bootstrap/Card";
@@ -24,9 +26,10 @@ function App() {
   const navigate = useNavigate();
   const { isAuthenticated, isLoading, user } = useAuth0();
   const [coaches, setCoaches] = useState([]);
+  // const [users, setUsers] = useState([]);
 
   //const baseURL = "http://localhost:5000";
-  const baseURL = "";
+  const baseURL = process.env.REACT_APP_BASEURL;
 
   useEffect(() => {
     async function fetchCoaches() {
@@ -37,6 +40,38 @@ function App() {
     }
     fetchCoaches();
   }, [coaches.length])
+
+  // useEffect(() => {
+  //   async function fetchUsers() {
+  //     const data = await fetch(baseURL + "/users");
+  //     const jsonData = await data.json();
+  //     console.log(jsonData);
+  //     setUsers(jsonData);
+  //   }
+  //   fetchUsers();
+  // }, [users.length])
+
+  // const addUser = async (user) => {
+  //   const names = users.map(user => user.userName);
+  //   if (!names.includes(user.nickname)) {
+  //     const tmp = await fetch(baseURL + "/users",
+  //       {
+  //         method: "POST",
+  //         headers: { "Content-Type": "application/json" },
+  //         body: JSON.stringify({
+  //           userName: user.nickname
+  //         })
+  //       });
+  //     const newUser = tmp.json();
+  //     setUsers([...users, newUser]);
+  //     console.log("now users:", users);
+  //   }
+  // }
+
+  // if (isAuthenticated) {
+  //   addUser(user);
+  // }
+
 
 
 
@@ -76,6 +111,9 @@ function App() {
 
 
   console.log("is authed?", isAuthenticated);
+  const cords = [[-123.2215338, 49.3801377, "Grouse Mountain"],
+  [-122.9744539, 50.0591648, "Whistler Mountain"],
+  [-123.2067337, 49.396018, "Cypress Mountain"]];
 
   return (
     <>
@@ -95,6 +133,7 @@ function App() {
               <>
                 <HomeImage />
                 <CoachList deleteCoach={deleteCoach} coaches={coaches} editCoach={editCoach} />
+                <Map coordinates={cords} />
 
               </>
             }></Route>
@@ -115,14 +154,17 @@ function App() {
               </>
             }></Route>
             <Route path="/coaches/:id/edit" element={<EditCoach />}></Route>
+            <Route path="/search" element={
+              <Search coaches={coaches} />
+            }></Route>
 
             <Route path="*" element={<p>Empty!</p>}></Route>
           </Routes>
+
           <Footer />
         </div>
       }
     </>
   );
 }
-
 export default App;

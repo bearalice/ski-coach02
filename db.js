@@ -83,8 +83,9 @@ module.exports =
     saveReview: async function saveReview(id, userID, review) {
         try {
             const data = await client.db('cs5610').collection('coaches').findOne({ _id: ObjectId(id) });
-            await client.db('cs5610').collection('reviews').insertOne(review);
             review.author = userID;
+            await client.db('cs5610').collection('reviews').insertOne(review);
+
             console.log("REVIEW ID:", review._id);
             data.reviews.push(review._id);
             await client.db('cs5610').collection('coaches').updateOne({ _id: ObjectId(id) }, { $set: { reviews: data.reviews } });
@@ -102,5 +103,21 @@ module.exports =
             console.log(err);
         }
     },
+    addUser: async function addUser(user) {
+        try {
+            await client.db('cs5610').collection('users').insertOne(user);
+        } catch (err) {
+            console.log(err);
+        }
+    },
+    findUsers: async function findUsers() {
+        try {
+            const data = await client.db('cs5610').collection('users').find();
+            const dataArray = await data.toArray();
+            return dataArray;
+        } catch (err) {
+            console.log(err);
+        }
+    }
 }
 //Add a function in db.js that receives an id and deletes the document with _id equal to the ObjectId(id)

@@ -12,11 +12,11 @@ export default function CoachDetail({ findCoach, deleteCoach, editCoach }) {
     const { id } = useParams();
     const [coach, setCoach] = useState({});
     const [reviews, setReviews] = useState([]);
-    const baseURL = "";
+    const baseURL = process.env.REACT_APP_BASEURL;
 
     useEffect(() => {
         async function fetchCoach() {
-            const data = await fetch(`/coaches2/${id}`);
+            const data = await fetch(baseURL + `/coaches2/${id}`);
             const jsonData = await data.json();
             console.log(jsonData);
             setCoach(jsonData);
@@ -26,7 +26,7 @@ export default function CoachDetail({ findCoach, deleteCoach, editCoach }) {
 
     useEffect(() => {
         async function fetchReviews() {
-            const reviewData = await fetch(`/coaches2/${id}/reviews`);
+            const reviewData = await fetch(baseURL + `/coaches2/${id}/reviews`);
             const reviewJsonData = await reviewData.json();
             console.log("reviews for a specific coach:", reviewJsonData);
             setReviews(reviewJsonData);
@@ -37,7 +37,7 @@ export default function CoachDetail({ findCoach, deleteCoach, editCoach }) {
     const { isAuthenticated, user } = useAuth0();
 
     const addReview = async (review) => {
-        const tmp = await fetch(`/coaches2/${id}/reviews`,
+        const tmp = await fetch(baseURL + `/coaches2/${id}/reviews`,
             {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -53,7 +53,7 @@ export default function CoachDetail({ findCoach, deleteCoach, editCoach }) {
 
     const edit_Coach = async (coach) => {
         console.log('Trying to edit:', coach);
-        const tmp = await fetch(`/coaches2/${id}`,
+        const tmp = await fetch(baseURL + `/coaches2/${id}`,
             {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
@@ -88,13 +88,22 @@ export default function CoachDetail({ findCoach, deleteCoach, editCoach }) {
             <h2>{coach.name}</h2>
             <p>{coach.email}</p>
             {isAuthenticated ?
-                <Button variant="danger" onClick={() => { deleteCoach(coach._id) }}> Delete Coach</Button>
+                <>
+                    {user.nickname === coach.author ?
+                        <div >
+                            <Button variant="danger" onClick={() => { deleteCoach(coach._id) }}> Delete Coach</Button>
+                            <Link to={`/coaches/${id}/edit`}>
+                                <AiFillEdit onClick={() => { edit_Coach(coach) }} />
+                            </Link>
+                        </div>
+                        : null}
+                </>
+
                 : null}
 
 
-            <Link to={`/coaches/${id}/edit`}>
-                <AiFillEdit onClick={() => { edit_Coach(coach) }} />
-            </Link>
+
+
 
             <form onSubmit={onSubmit}>
                 <div className="form-control">
@@ -113,6 +122,7 @@ export default function CoachDetail({ findCoach, deleteCoach, editCoach }) {
                     <Card >
                         <p>Review: {review.comment}</p>
                         <p>Rating: {review.rating}</p>
+                        <p>Author: {review.author}</p>
                     </Card>
                 ))
             }

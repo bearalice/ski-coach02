@@ -16,6 +16,7 @@ export default function EditCoach() {
     const [email, setEmail] = useState('');
 
     const navigate = useNavigate();
+    const baseURL = process.env.REACT_APP_BASEURL;
 
     const onSubmit = (e) => {
         if (!name || !email) {
@@ -35,7 +36,7 @@ export default function EditCoach() {
 
     useEffect(() => {
         async function fetchCoach() {
-            const data = await fetch(`/coaches/${id}`);
+            const data = await fetch(baseURL + `/coaches2/${id}`);
             const jsonData = await data.json();
             console.log(jsonData);
             setCoach(jsonData);
@@ -53,7 +54,7 @@ export default function EditCoach() {
 
     const edit_Coach = async (id, name, email, user, coach) => {
         console.log('Trying to edit:', coach);
-        const tmp = await fetch(`/coaches2/${id}/edit`,
+        const tmp = await fetch(baseURL + `/coaches2/${id}/edit`,
             {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },

@@ -1,6 +1,7 @@
 const express = require('express');
 const coaches = require('./routes/coaches.js');
 const reviews = require('./routes/reviews.js');
+const users = require('./routes/users.js');
 const db = require('./db.js');
 // const bodyParser = require('body-parser');
 
@@ -17,6 +18,7 @@ const staticService = express.static(__dirname + "/public/build")
 app.use(staticService);
 app.use('/coaches2', coaches); //this is a middleware  
 app.use('/coaches/:id/reviews', reviews); //this is a middleware
+app.use('/users', users); //this is a middleware
 
 
 app.use("/", staticService);
