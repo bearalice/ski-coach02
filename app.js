@@ -33,9 +33,8 @@ app.get('/*', function (req, res) {
 
 app.listen(port, function () {
     console.log(`app listening on ${port}`);
-});
-
-app.listen(8000, () => {
-    console.log("running on 5000");
     db.dbConnect();
 });
+
+
+//test
