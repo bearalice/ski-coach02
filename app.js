@@ -17,7 +17,7 @@ app.use(express.json());
 const staticService = express.static(__dirname + "/public/build")
 app.use(staticService);
 app.use('/coaches2', coaches); //this is a middleware  
-app.use('/coaches/:id/reviews', reviews); //this is a middleware
+app.use('/coaches2/:id/reviews', reviews); //this is a middleware
 app.use('/users', users); //this is a middleware
 
 
