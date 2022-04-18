@@ -24,7 +24,7 @@ app.get('/', function (req, res) {
 });
 
 app.get('/*', function (req, res) {
-    res.sendFile('/index.html', function (err) {
+    res.sendFile('/', function (err) {
         if (err) {
             res.status(500).send(err)
         }
