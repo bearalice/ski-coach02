@@ -30,7 +30,7 @@ function App() {
 
   useEffect(() => {
     async function fetchCoaches() {
-      const data = await fetch(baseURL + "/coaches");
+      const data = await fetch(baseURL + "/coaches2");
       const jsonData = await data.json();
       console.log(jsonData);
       setCoaches(jsonData);
@@ -42,7 +42,7 @@ function App() {
 
   const addCoach = async (coach) => {
     console.log('coach is here:', coach);
-    const tmp = await fetch(baseURL + "/coaches",
+    const tmp = await fetch(baseURL + "/coaches2",
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -61,7 +61,7 @@ function App() {
   const deleteCoach = async (id) => {
     console.log("delete things， id:");
     console.log(id);
-    await fetch(`http://localhost:5000/coaches/${id}`,
+    await fetch(`http://localhost:5000/coaches2/${id}`,
       {
         method: 'DELETE',
         headers: { "Content-Type": "application/json" }

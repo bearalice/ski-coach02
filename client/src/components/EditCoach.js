@@ -53,7 +53,7 @@ export default function EditCoach() {
 
     const edit_Coach = async (id, name, email, user, coach) => {
         console.log('Trying to edit:', coach);
-        const tmp = await fetch(`/coaches/${id}/edit`,
+        const tmp = await fetch(`/coaches2/${id}/edit`,
             {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
