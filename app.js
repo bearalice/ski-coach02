@@ -23,6 +23,14 @@ app.get('/', function (req, res) {
     res.send('coach good morning!');
 });
 
+app.get('/*', function (req, res) {
+    res.sendFile('/index.html', function (err) {
+        if (err) {
+            res.status(500).send(err)
+        }
+    })
+})
+
 app.listen(port, function () {
     console.log(`app listening on ${port}`);
 });
