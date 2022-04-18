@@ -13,23 +13,25 @@ app.use(cors());
 app.use(express.json());
 
 // app.use(bodyParser.urlencoded({ extended: false }));
-app.use(express.static(__dirname + "/public/build"));
+const staticService = express.static(__dirname + "/public/build")
+app.use(staticService);
 app.use('/coaches2', coaches); //this is a middleware  
 app.use('/coaches/:id/reviews', reviews); //this is a middleware
 
 
+app.use("/", staticService);
+app.use("*", staticService);
+// app.get('/', function (req, res) {
+//     res.send('coach good morning!');
+// });
 
-app.get('/', function (req, res) {
-    res.send('coach good morning!');
-});
-
-app.get('/*', function (req, res) {
-    res.sendFile(path.join(__dirname, '/public/build/index.html'), function (err) {
-        if (err) {
-            res.status(500).send(err)
-        }
-    })
-})
+// app.get('/*', function (req, res) {
+//     res.sendFile(path.join(__dirname, '/public/build/index.html'), function (err) {
+//         if (err) {
+//             res.status(500).send(err)
+//         }
+//     })
+// })
 
 app.listen(port, function () {
     console.log(`app listening on ${port}`);
