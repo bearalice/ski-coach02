@@ -6,6 +6,7 @@ import { useAuth0 } from '@auth0/auth0-react'
 import { FaTimes } from 'react-icons/fa';
 import { AiFillEdit } from "react-icons/ai";
 import { Button, Card } from 'react-bootstrap';
+import LoginButton from './LoginButton';
 
 
 export default function CoachDetail({ findCoach, deleteCoach, editCoach }) {
@@ -90,43 +91,72 @@ export default function CoachDetail({ findCoach, deleteCoach, editCoach }) {
             {isAuthenticated ?
                 <>
                     {user.nickname === coach.author ?
-                        <div >
-                            <Button variant="danger" onClick={() => { deleteCoach(coach._id) }}> Delete Coach</Button>
-                            <Link to={`/coaches/${id}/edit`}>
-                                <AiFillEdit onClick={() => { edit_Coach(coach) }} />
-                            </Link>
-                        </div>
+                        <Button variant="danger" onClick={() => { deleteCoach(coach._id) }}> Delete Coach</Button>
                         : null}
                 </>
 
                 : null}
 
+            {isAuthenticated ?
+                <>
+                    {user.nickname === coach.author ?
+                        <Link to={`/coaches/${id}/edit`}>
+                            <AiFillEdit onClick={() => { edit_Coach(coach) }} />
+                        </Link>
+                        : null}
+                </>
+
+                : null}
+
+            {/* {isAuthenticated ?
+                <Link to={`/coaches/${id}/edit`}>
+                    <AiFillEdit onClick={() => { edit_Coach(coach) }} />
+                </Link> : null} */}
+            <div className='contactCoachButton'>
+                <Button variant="primary" id="email-link" href={`mailto:${coach.email}`} >Contact {coach.name}</Button>
+            </div>
+
+            {isAuthenticated ?
+                <>
+                    <form onSubmit={onSubmit}>
+                        <div className="form-control">
+                            <label>Review description of the coach</label>
+                            <input type="text" value={comment} onChange={(e) => setComment(e.target.value)} />
+                        </div>
+                        <div className="form-control">
+                            <label>Overall rating of the coach</label>
+                            <input type="text" value={rating} onChange={(e) => setRating(e.target.value)}></input>
+                        </div>
+                        <input type="submit" value="Save Review" />
+                    </form>
+
+                    <div className='card-body p-3'> <h4>Reviews for {coach.name}</h4> </div></>
+                : <p>
+                    <LoginButton />
+                    Login to add review</p>}
 
 
+            <ul>
+                {
+                    reviews.map(review => (
+                        <li key={review._id} >
+                            <Card className='card mb-3 border-0' >
+                                <p>Review: {review.comment}</p>
+                                <p>Rating: {review.rating}</p>
+                                <p>Author: {review.author}</p>
+                                {/* {isAuthenticated ?
+                                    <>
+                                        {user.nickname === review.author ?
+                                            <Button variant="danger" onClick={() => { deleteCoach(coach._id) }}> Delete Review</Button>
+                                            : null}
+                                    </>
 
-
-            <form onSubmit={onSubmit}>
-                <div className="form-control">
-                    <label>Review description of the coach</label>
-                    <input type="text" value={comment} onChange={(e) => setComment(e.target.value)} />
-                </div>
-                <div className="form-control">
-                    <label>Overall rating of the coach</label>
-                    <input type="text" value={rating} onChange={(e) => setRating(e.target.value)}></input>
-                </div>
-                <input type="submit" value="Save Review" />
-            </form>
-            <div className="reviews"> Reviews for {coach.name} </div>
-            {
-                reviews.map(review => (
-                    <Card >
-                        <p>Review: {review.comment}</p>
-                        <p>Rating: {review.rating}</p>
-                        <p>Author: {review.author}</p>
-                    </Card>
-                ))
-            }
-
+                                    : null} */}
+                            </Card>
+                        </li>
+                    ))
+                }
+            </ul>
 
         </>
     )
